@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <title>Login Here</title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+    <style>
+        form{
+    background-color: black;
+    padding-top: 1%;
+    padding-bottom: 5%;
+    border-radius: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 8%;
+}
+.a{
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    float: right;
+}
+input{
+    height: 35px;
+    width: 30%;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    text-indent: 10px;
+}
+button{
+    background-color: #FF5964;
+    border-radius: 10px;
+    height: 35px;
+    width: 30%;  
+    border: none;  
+    font-family: Montserrat ;
+    color: white;
+}
+h2{
+    color: white;
+    font-family: Montserrat ;
+    font-size: 40px;
+}
+.rr{
+    padding-left: 2%;
+    padding-top: 2%;
+    float: left;
+}
+a:link, a:visited {
+  background-color: #FF5964;
+  color: white;
+  padding: 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 15px;
+  font-family: Montserrat;
+  font-size: small;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+::placeholder{
+    font-family: Montserrat ;
+}
+input{
+    min-width: 300px;
+}
+h1{
+    font-family: Montserrat;
+    color: whitesmoke;
+}
+body{
+    background-color:#5286F3;
+}
+
+    </style>
+    <body class="container">
+        <div class="page-header">
+            <h1>Simple Auth-System</h1>
+        </div>
+            <div style="text-align: center;">
+                <form action="/signup" method="post">
+                    <h2>Register</h2>
+                    <input type="email" placeholder="User Email" name="email"><br><br>
+                     <input type="text" placeholder="Username" name="username"><br><br>
+                    <input type="password" placeholder="Password" name="password"><br><br>
+                    <br>
+                    <button>Register</button>
+                </form> 
+                <br>
+                <span style="float: left;"><a href="/login">Log in</a></span>                
+            </div>          
+        </div>
+    </body>
+</html>
