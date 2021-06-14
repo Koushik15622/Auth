@@ -1,13 +1,18 @@
+require('dotenv').config();
 var express = require("express");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var User = require("./models/User");
-
+var passport = require("passport");
+var morgan = require('morgan');
+var google = require("passport-google-oauth").OAuth2Strategy;
 var app = express();
-
+//app.use(morgan('dev'));
+app.set('view-engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
 app.use(
   session({
     key: "user_sid",
@@ -19,6 +24,42 @@ app.use(
     },
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
+//====================================================================================
+var userProfile;
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+const G_ID = process.env.GID;
+const G_PS = process.env.GPS;
+passport.use(new google({
+  clientID: G_ID,
+  clientSecret: G_PS,
+  callbackURL: "http://127.0.0.1:3000/auth/google/cb"
+},
+function(accessToken,refreshToken,profile,done){
+    userProfile=profile;
+    return done(null,userProfile);
+}
+));
+
+app.get('/auth/google', 
+  passport.authenticate('google', { scope : ['profile', 'email'] }));
+ 
+app.get('/auth/google/cb', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    res.sendFile(__dirname+"/public/dashboard.html");
+  });
+
+//==========================================================================================================
+
 
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
@@ -108,7 +149,7 @@ app.get("/logout", (req, res) => {
 app.use(function (req, res, next) {
   res.status(404).send("Sorry can't find that!");
 });
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 app.listen(port, () =>
   console.log('App started on port '+port)
 );
