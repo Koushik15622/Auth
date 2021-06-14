@@ -41,7 +41,7 @@ const G_PS = process.env.GPS;
 passport.use(new google({
   clientID: G_ID,
   clientSecret: G_PS,
-  callbackURL: "http://127.0.0.1:3000/auth/google/cb"
+  callbackURL: "http://auth-bzp4.herokuapp.com/auth/google/cb"
 },
 function(accessToken,refreshToken,profile,done){
     userProfile=profile;
