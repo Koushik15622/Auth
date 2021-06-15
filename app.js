@@ -8,11 +8,12 @@ var passport = require("passport");
 var morgan = require('morgan');
 var google = require("passport-google-oauth").OAuth2Strategy;
 var app = express();
-//app.use(morgan('dev'));
+//=====================================================================================================================
+app.use(morgan('dev'));
 app.set('view-engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+//=====================================================================================================================
 app.use(
   session({
     key: "user_sid",
@@ -21,6 +22,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       expires: 600,
+      secure:false
     },
   })
 );
@@ -41,10 +43,11 @@ const G_PS = process.env.GPS;
 passport.use(new google({
   clientID: G_ID,
   clientSecret: G_PS,
-  callbackURL: "http://auth-bzp4.herokuapp.com/auth/google/cb"
+  callbackURL: "http://127.0.0.1:3000/auth/google/cb"
 },
 function(accessToken,refreshToken,profile,done){
     userProfile=profile;
+    //console.log(profile);
     return done(null,userProfile);
 }
 ));
@@ -55,7 +58,10 @@ app.get('/auth/google',
 app.get('/auth/google/cb', 
   passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
-    res.sendFile(__dirname+"/public/dashboard.html");
+    req.session.user=userProfile.displayName;
+    req.cookies.user_sid=userProfile.id
+    //console.log(userProfile.id);
+    res.redirect("/dashboard");
   });
 
 //===================================GOOGLE-AUTH CODE ENDS HERE=======================================================================
@@ -69,6 +75,8 @@ app.use((req, res, next) => {
 });
 
 var sessionChecker = (req, res, next) => {
+  //console.log(req.session.user);
+  //console.log(req.cookies.user_sid);
   if (req.session.user && req.cookies.user_sid) {
     res.redirect("/dashboard");
   } else {
@@ -79,7 +87,7 @@ var sessionChecker = (req, res, next) => {
 app.get("/", sessionChecker, (req, res) => {
   res.redirect("/login");
 });
-
+//=====================================================================================================================================
 app
   .route("/signup")
   .get(sessionChecker, (req, res) => {
@@ -114,6 +122,7 @@ app
 
       try {
         var user = await User.findOne({ username: username }).exec();
+        //console.log(user);
         if(!user) {
             res.redirect("/login");
         }
@@ -130,6 +139,8 @@ app
   });
 
   app.get("/dashboard", (req, res) => {
+  //console.log(req.cookies.user_sid);
+  //console.log(req.session.user);
   if (req.session.user && req.cookies.user_sid) {
     res.sendFile(__dirname + "/public/dashboard.html");
   } else {
