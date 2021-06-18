@@ -25,14 +25,15 @@ passport.use(new google({
   clientSecret: G_PS,
   callbackURL: process.env.CBURL
 },
-function(token,refreshToken,profile,done){
+async function(token,refreshToken,profile,done){
         userProfile = profile;
-        var user = User.findOne({ username : profile.id}).exec();
+        var user = await User.findOne({ username : profile.id}).exec();
             if(user) {
+                //console.log("user = "+user);
                 return done(null, user);
             } 
             else {
-                //console.log(profile);
+                //console.log("profile = "+profile);
                 var newUser = new User({
                     username : profile.id,
                     password : profile.id,
@@ -55,7 +56,7 @@ router.get('/google/cb',
   function(req, res) {
     req.session.user=userProfile;
     req.session.user.username = userProfile.displayName;
-    req.cookies.user_sid=userProfile.id;
+    req.session.save();
     res.redirect("/dashboard");
   });
 

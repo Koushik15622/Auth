@@ -5,15 +5,9 @@ var session = require("express-session");
 var path = require("path");
 var router = express.Router();
 //var user;
-router.use((req, res, next) => {
-    if (req.cookies.user_sid && !req.session.user) {
-      res.clearCookie("user_sid");
-    }
-    next();
-  });
-  
+
   var sessionChecker = (req, res, next) => {
-    if (req.session.user && req.cookies.user_sid) {
+    if (req.session.user) {
       res.redirect("/dashboard");
     } else {
       next();
@@ -42,6 +36,7 @@ router.use((req, res, next) => {
       } else {
           console.log(docs)
         req.session.user = docs;
+        req.session.save();
         res.redirect("/dashboard");
       }
     });
@@ -59,18 +54,19 @@ router.use((req, res, next) => {
       try {
         var user = await User.findOne({ username: username }).exec();
         req.session.user = user;
+        req.session.save();
         console.log("User found in db"+user);
-        if(!user) {
-            console.log("went to login frm if");
+         if(!user) {
+             //console.log("went to login frm if");
             res.redirect("/login");
         }
         user.comparePassword(password, (error, match) => {
             if(!match) {
-                console.log("passwd error");
+                //console.log("passwd error");
               res.redirect("/login");
             }
         });
-        // req.session.user = user;
+        //console.log("session being passed = "+req.session.user);
         res.redirect("/dashboard");
     } catch (error) {
       console.log(error)
@@ -78,8 +74,8 @@ router.use((req, res, next) => {
   });
 
   router.get("/dashboard", (req, res) => {
-    console.log("session = "+req.session.user)
-  if (req.session.user && req.cookies.user_sid) {
+    req.session.save();
+  if (req.session.user) {
     res.render('dashboard',{uname:req.session.user.username});
   } else {
     res.redirect("/login");
