@@ -3,162 +3,36 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
-var User = require("./models/User");
 var passport = require("passport");
 var morgan = require('morgan');
-var google = require("passport-google-oauth").OAuth2Strategy;
+var auth = require('./routes/auth');
+var gauth = require('./routes/g-auth');
 var app = express();
-//=====================================================================================================================
+
 app.use(morgan('dev'));
-app.set('view-engine','ejs');
+app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-//=====================================================================================================================
+
 app.use(
   session({
     key: "user_sid",
-    secret: "somerandonstuffs",
+    secret: "IDONTKNOW",
     resave: false,
     saveUninitialized: false,
+    maxAge: 600,
     cookie: {
       expires: 600,
       secure:false
     },
   })
 );
-//=================================GOOGLE-AUTH CODE==========================================================================
-app.use(passport.initialize());
-app.use(passport.session());
-var userProfile;
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
 
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
-});
-
-const G_ID = process.env.GID;
-const G_PS = process.env.GPS;
-passport.use(new google({
-  clientID: G_ID,
-  clientSecret: G_PS,
-  callbackURL: "http://127.0.0.1:3000/auth/google/cb"
-},
-function(accessToken,refreshToken,profile,done){
-    userProfile=profile;
-    //console.log(profile);
-    return done(null,userProfile);
-}
-));
-
-app.get('/auth/google', 
-  passport.authenticate('google', { scope : ['profile', 'email'] }));
- 
-app.get('/auth/google/cb', 
-  passport.authenticate('google', { failureRedirect: '/error' }),
-  function(req, res) {
-    req.session.user=userProfile.displayName;
-    req.cookies.user_sid=userProfile.id
-    //console.log(userProfile.id);
-    res.redirect("/dashboard");
-  });
-
-//===================================GOOGLE-AUTH CODE ENDS HERE=======================================================================
-
-
-app.use((req, res, next) => {
-  if (req.cookies.user_sid && !req.session.user) {
-    res.clearCookie("user_sid");
-  }
-  next();
-});
-
-var sessionChecker = (req, res, next) => {
-  //console.log(req.session.user);
-  //console.log(req.cookies.user_sid);
-  if (req.session.user && req.cookies.user_sid) {
-    res.redirect("/dashboard");
-  } else {
-    next();
-  }
-};
-
-app.get("/", sessionChecker, (req, res) => {
-  res.redirect("/login");
-});
-//=====================================================================================================================================
-app
-  .route("/signup")
-  .get(sessionChecker, (req, res) => {
-    res.sendFile(__dirname + "/public/signup.html");
-  })
-  .post((req, res) => {
-
-    var user = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password:req.body.password,
-    });
-    user.save((err, docs) => {
-      if (err) {
-        res.redirect("/signup");
-      } else {
-          console.log(docs)
-        req.session.user = docs;
-        res.redirect("/dashboard");
-      }
-    });
-  });
-
-  app
-  .route("/login")
-  .get(sessionChecker, (req, res) => {
-    res.sendFile(__dirname + "/public/login.html");
-  })
-  .post(async (req, res) => {
-    var username = req.body.username,
-      password = req.body.password;
-
-      try {
-        var user = await User.findOne({ username: username }).exec();
-        //console.log(user);
-        if(!user) {
-            res.redirect("/login");
-        }
-        user.comparePassword(password, (error, match) => {
-            if(!match) {
-              res.redirect("/login");
-            }
-        });
-        req.session.user = user;
-        res.redirect("/dashboard");
-    } catch (error) {
-      console.log(error)
-    }
-  });
-
-  app.get("/dashboard", (req, res) => {
-  //console.log(req.cookies.user_sid);
-  //console.log(req.session.user);
-  if (req.session.user && req.cookies.user_sid) {
-    res.sendFile(__dirname + "/public/dashboard.html");
-  } else {
-    res.redirect("/login");
-  }
-});
-
-app.get("/logout", (req, res) => {
-  if (req.session.user && req.cookies.user_sid) {
-    res.clearCookie("user_sid");
-    res.redirect("/");
-  } else {
-    res.redirect("/login");
-  }
-});
-
+ app.use(passport.initialize());
+app.use('/',auth);
+app.use('/auth',gauth);
 app.use(function (req, res, next) {
-  res.status(404).send("Sorry can't find that!");
+  res.status(404).send("Kya chahiye bhai!?");
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () =>
