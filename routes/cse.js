@@ -20,12 +20,5 @@ router.get("/rbooks", (req, res) => {
     }
 });
 
-router.get("/sbooks", (req, res) => {
-    if (req.session.user) {
-      res.render('cseS',{uname:req.session.user.username});
-    } else {
-      res.redirect("/login");
-    }
-});
 
 module.exports = router;
