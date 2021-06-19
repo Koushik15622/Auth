@@ -26,23 +26,24 @@ passport.use(new google({
   callbackURL: process.env.CBURL
 },
 async function(token,refreshToken,profile,done){
-        userProfile = profile;
-        var user = await User.findOne({ username : profile.id}).exec();
+        //userProfile = profile;
+         user = await User.findOne({ username : profile.id}).exec();
             if(user) {
-                //console.log("user = "+user);
-                return done(null, user);
+                userProfile=user;
+                return done(null, userProfile);
             } 
             else {
                 //console.log("profile = "+profile);
-                var newUser = new User({
-                    username : profile.id,
+                userProfile = new User({
+                    username : profile.displayName,
                     password : profile.id,
-                    email : profile.emails[0].value
+                    email : profile.emails[0].value,
+                    due : 0
                 });
-                newUser.save(function(err){
+                userProfile.save(function(err){
                     if(err)
                         throw err;
-                    return done(null, newUser);
+                    return done(null, userProfile);
                 });
             }
     
@@ -55,7 +56,6 @@ router.get('/google/cb',
   passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
     req.session.user=userProfile;
-    req.session.user.username = userProfile.displayName;
     req.session.save();
     res.redirect("/dashboard");
   });
