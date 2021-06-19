@@ -71,7 +71,7 @@ var router = express.Router();
 
   router.get("/dashboard", (req, res) => {
   if (req.session.user) {
-    res.render('dashboard',{uname:req.session.user.username});
+    res.render('dashboard',{uname:req.session.user.username,due:req.session.user.due});
   } else {
     res.redirect("/login");
   }

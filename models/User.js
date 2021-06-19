@@ -29,6 +29,11 @@ const userSchema = mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+
+    due:{
+        type:Number,
+        default: 0
     }
 })
 

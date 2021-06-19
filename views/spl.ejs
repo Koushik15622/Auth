@@ -3,10 +3,13 @@
         <title>CSE Books</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
-
-    </head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+      </head>
     <style>
-h1,a,p,h4{
+h1,a,p,h4,button{
     font-family: Montserrat;
     color: whitesmoke;
 }
@@ -52,7 +55,7 @@ body{
               <br>
               <p class="card-text">description - spl cse</p>
               <hr>
-              <a id="sb" href="#" class="card-link">Download</a>
+              <button class="btn-warning" style="width: 100px;height: 40px;background-color: #FF5964;" onclick=ConfirmDialog(0)>Download</button>
             </div>
           </div> 
           <div class="card" style="margin: 5%;background-color: black;color: cornsilk;border-radius: 15px;">
@@ -61,8 +64,52 @@ body{
               <br>
               <p class="card-text">description- spl cse</p>
               <hr>
-              <a id="sb" href="#" class="card-link">Download</a>
+              <button class="btn-warning" style="width: 100px;height: 40px;background-color: #FF5964;" onclick=ConfirmDialog(1)>Download</button>
             </div>
-          </div>  
+          </div>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+          <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+          <script>
+          function ConfirmDialog(id) {
+            message = "The amount will be added to your Total Due. Confirm this step ?"
+            $('<div></div>').appendTo('body')
+              .html('<div><h6>' + message + '</h6></div>')
+              .dialog({
+                modal: true,
+                title: 'Delete message',
+                zIndex: 10000,
+                autoOpen: true,
+                width: '600',
+                resizable: true,
+                buttons: {
+                  Yes: function() {
+                    //alert("/spl/"+id);
+                    $.ajax({
+                      url: "/spl/"+id,
+                      type: 'GET',
+                      success: function(data){
+                        toastr.success('Purchase Successful. Due amount has been updated!!');
+                      },
+                      error: function(err){
+                        alert(err);
+                      }                      
+                    })
+                    //alert("af spl"+id);
+                   $(this).dialog("close");
+                  },
+                  No: function() {
+                    $(this).dialog("close");
+                  }
+                },
+                close: function(event, ui) {
+                  $(this).remove();
+                }
+              });
+          };
+          
+          </script>
     </body>
 </html>
