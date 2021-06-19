@@ -27,7 +27,7 @@ passport.use(new google({
 },
 async function(token,refreshToken,profile,done){
         //userProfile = profile;
-         user = await User.findOne({ username : profile.id}).exec();
+         user = await User.findOne({ username : profile.displayName}).exec();
             if(user) {
                 userProfile=user;
                 return done(null, userProfile);
