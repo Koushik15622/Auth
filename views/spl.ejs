@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>CSE Books</title>
+        <title>Special Books</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -41,6 +41,7 @@ body{
                 <li><a href="/dashboard">Home</a></li>
                 <li><a href="/cse">CSE</a></li>
                 <li><a href="/ece">ECE</a></li>
+                <li><a href="/spl">Special Books</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span> <%=uname %></a></li>
@@ -48,7 +49,8 @@ body{
               </ul>
             </div>
           </nav> 
-          <h1 class="container">COLLEGE SPL BOOKS</h1>
+          <h1 class="container">COLLEGE SPECIAL BOOKS</h1>
+          <p class="container">Cost of these books will be added to your Due amount. SoftCopy can be downloaded and Hardcopy will be given after the RECEIPT is verified</p>
           <div class="card" style="margin: 5%;background-color: black;color: cornsilk;border-radius: 15px;">
             <div class="card-body" style="padding: 3%;">
               <h4 class="card-title">GATE</h4>
@@ -94,10 +96,10 @@ body{
                       success: function(data){
                         var us = data.user.username,c=data.cost,bid=data.bid,bn=data.bn,sid=data.tid;
                         $('<div></div>').appendTo('body')
-                        .html('<div><h6>Username : '+us+'</h6><h6>Bookname : '+bn+'</h6><h6>BookID : '+bid+'</h6><h6>Book cost : '+c+'</h6><h6>Transaction ID : '+sid+'</h6></div>')
+                        .html('<div><h6>Username : '+us+'</h6><h6>Bookname : '+bn+'</h6><h6>BookID : '+bid+'</h6><h6>Book cost : '+c+'</h6><h6>Transaction ID : '+sid+'</h6><h5>Please take a screenshot of the RECEIPT for verification</h5></div>')
                         .dialog({
                         modal: true,
-                        title: 'Receipt',
+                        title: 'RECEIPT',
                         zIndex: 10000,
                         autoOpen: true,
                         width: '600',
