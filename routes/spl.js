@@ -2,8 +2,12 @@ require('dotenv').config();
 var express = require("express");
 var User = require("../models/User");
 var path = require("path");
+var sid = require('shortid');
 var router = express.Router();
-var rate = [150,200,400,650,1299];
+var rate = [549,799,930,699,760];
+var id = [12576,36684,49056,88674,96754];
+var bn = ['GATE','GRE','TOEFL']
+var l = ['https://www.indiacon.in/downloads/588b3b4843455.pdf','https://www.indiacon.in/downloads/588b3b4843455.pdf','https://www.indiacon.in/downloads/588b3b4843455.pdf'];
 
 router.get("/", (req, res) => {
     if (req.session.user) {
@@ -24,8 +28,14 @@ router.get("/:c", (req, res) => {
        User.updateOne({username:user.username},{$set:{due:fp}}).then(async(r,err)=>{
          var u = await User.findOne({username:user.username}).exec();
          req.session.user = u;
+         req.session.cost = rate[i];
+         req.session.bid = id[i];
+         req.session.bn = bn[i];
+         req.session.link = l[i];
+         req.session.tid = sid.generate();
          req.session.save();
-         return res.send(req.session.user);
+         //console.log(req.session);
+         return res.send(req.session);
          
      });
      //res.send(req.session.user);

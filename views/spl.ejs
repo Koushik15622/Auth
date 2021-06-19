@@ -51,18 +51,18 @@ body{
           <h1 class="container">COLLEGE SPL BOOKS</h1>
           <div class="card" style="margin: 5%;background-color: black;color: cornsilk;border-radius: 15px;">
             <div class="card-body" style="padding: 3%;">
-              <h4 class="card-title">Book</h4>
+              <h4 class="card-title">GATE</h4>
               <br>
-              <p class="card-text">description - spl cse</p>
+              <p class="card-text">Cost - 549/-</p>
               <hr>
               <button class="btn-warning" style="width: 100px;height: 40px;background-color: #FF5964;" onclick=ConfirmDialog(0)>Download</button>
             </div>
           </div> 
           <div class="card" style="margin: 5%;background-color: black;color: cornsilk;border-radius: 15px;">
             <div class="card-body" style="padding: 3%;">
-              <h4 class="card-title">Book</h4>
+              <h4 class="card-title">GRE</h4>
               <br>
-              <p class="card-text">description- spl cse</p>
+              <p class="card-text">Cost - 799/-</p>
               <hr>
               <button class="btn-warning" style="width: 100px;height: 40px;background-color: #FF5964;" onclick=ConfirmDialog(1)>Download</button>
             </div>
@@ -71,6 +71,7 @@ body{
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
           <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.6.4/jquery.colorbox-min.js"></script>
           <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
           <script>
           function ConfirmDialog(id) {
@@ -83,7 +84,7 @@ body{
                 zIndex: 10000,
                 autoOpen: true,
                 width: '600',
-                resizable: true,
+                resizable: false,
                 buttons: {
                   Yes: function() {
                     //alert("/spl/"+id);
@@ -91,7 +92,26 @@ body{
                       url: "/spl/"+id,
                       type: 'GET',
                       success: function(data){
+                        var us = data.user.username,c=data.cost,bid=data.bid,bn=data.bn,sid=data.tid;
+                        $('<div></div>').appendTo('body')
+                        .html('<div><h6>Username : '+us+'</h6><h6>Bookname : '+bn+'</h6><h6>BookID : '+bid+'</h6><h6>Book cost : '+c+'</h6><h6>Transaction ID : '+sid+'</h6></div>')
+                        .dialog({
+                        modal: true,
+                        title: 'Receipt',
+                        zIndex: 10000,
+                        autoOpen: true,
+                        width: '600',
+                        resizable: false,
+                        buttons:{
+                          close:  function(event, ui) {
+                          $(this).remove();}
+                         }
+                      })
+
                         toastr.success('Purchase Successful. Due amount has been updated!!');
+                        var w = window.open(data.link,'_blank');
+                        if(w){w.focus()}
+                        else{alert('Please allow to download the softcopy!!')}
                       },
                       error: function(err){
                         alert(err);
