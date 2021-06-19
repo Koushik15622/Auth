@@ -51,8 +51,6 @@ var router = express.Router();
 
       try {
         var user = await User.findOne({ username: username }).exec();
-        req.session.user = user;
-        req.session.save();
         //console.log("User found in db"+user);
          if(!user) {
              //console.log("went to login frm if");
@@ -63,7 +61,8 @@ var router = express.Router();
               res.redirect("/login");
             }
         });
-        //console.log("session being passed = "+req.session.user);
+        req.session.user = user;
+        req.session.save();
         res.redirect("/dashboard");
     } catch (error) {
       console.log(error)
