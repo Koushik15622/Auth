@@ -8,6 +8,8 @@ var passport = require("passport");
 var morgan = require('morgan');
 var auth = require('./routes/auth');
 var gauth = require('./routes/g-auth');
+var cse = require('./routes/cse');
+var ece = require('./routes/ece');
 var app = express();
 
 //app.use(morgan('dev'));
@@ -31,6 +33,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use('/',auth);
 app.use('/auth',gauth);
+app.use('/cse',cse);
+app.use('/ece',ece);
 app.use(function (req, res, next) {
   res.status(404).send("Kya chahiye bhai!?");
 });
