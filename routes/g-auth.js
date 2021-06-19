@@ -8,7 +8,7 @@ var router = express.Router();
 
 app.use(passport.initialize());
 app.use(passport.session());
-var userProfile;
+var userProfile,us;
 
 passport.serializeUser(function(user, cb) {
   cb(null, user);
@@ -26,8 +26,8 @@ passport.use(new google({
   callbackURL: process.env.CBURL
 },
 async function(token,refreshToken,profile,done){
-        //userProfile = profile;
-         user = await User.findOne({ username : profile.displayName}).exec();
+         us = profile.displayName;
+         user = await User.findOne({ username : profile.id}).exec();
             if(user) {
                 userProfile=user;
                 return done(null, userProfile);
@@ -35,7 +35,7 @@ async function(token,refreshToken,profile,done){
             else {
                 //console.log("profile = "+profile);
                 userProfile = new User({
-                    username : profile.displayName,
+                    username : profile.id,
                     password : profile.id,
                     email : profile.emails[0].value,
                     due : 0
@@ -56,6 +56,7 @@ router.get('/google/cb',
   passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
     req.session.user=userProfile;
+    req.session.user.username = us;
     req.session.save();
     res.redirect("/dashboard");
   });
