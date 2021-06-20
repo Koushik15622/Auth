@@ -1,0 +1,51 @@
+form{
+background-color: black;
+padding-top: 1%;
+padding-bottom: 5%;
+border-radius: 20px;
+margin-left: 20%;
+margin-right: 20%;
+margin-top: 8%;
+}
+.a{
+padding-right: 2%;
+padding-top: 1.7%;
+padding-bottom: 1.7%;
+float: right;
+}
+input{
+height: 35px;
+min-width: 300px;
+border-radius: 10px;
+outline: none;
+border: none;
+text-indent: 10px;
+}
+button{
+background-color: #FF5964;
+border-radius: 10px;
+height: 35px;
+width: 30%;  
+border: none;  
+font-family: Montserrat ;
+color: white;
+}
+h2{
+color: white;
+font-family: Montserrat ;
+font-size: 40px;
+}
+.rr{
+padding-left: 3%;
+padding-top: 2%;
+padding-bottom: 2%;
+float: left;
+}
+
+h1,a{
+font-family: Montserrat;
+color: whitesmoke;
+}
+body{
+background-color:#5286F3;
+}
