@@ -5,14 +5,14 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     </head>
     <style>
-        form{
+       form{
     background-color: black;
     padding-top: 1%;
     padding-bottom: 5%;
     border-radius: 20px;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 5%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 8%;
 }
 .a{
     padding-right: 2%;
@@ -48,22 +48,8 @@ h2{
     padding-bottom: 2%;
     float: left;
 }
-          a:link, a:visited {
-  background-color: #FF5964;
-  color: white;
-  padding: 8px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 15px;
-  font-family: Montserrat;
-  font-size: small;
-}
-
-a:hover, a:active {
-  background-color: red;
-}
-h1{
+    
+h1,a{
     font-family: Montserrat;
     color: whitesmoke;
 }
@@ -71,10 +57,19 @@ body{
     background-color:#5286F3;
 }
     </style>
-    <body class="container">
-        <div class="page-header">
-            <h1>Online Companinon - Virtual Books</h1>
-        </div>
+    <body>
+        <nav class="navbar navbar-inverse fixed-top" style="width: 100%;padding-bottom: 10px;">
+            <div class="container-fluid">
+              <div class="navbar-header" style="padding-top: 10px;padding-left: 150px;">
+                <a class="navbar-brand" href="/">Online Companion - Virtual Books</a>
+              </div>
+              <ul class="nav navbar-nav navbar-right" style="padding-top: 10px;padding-right: 70px;">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+                <li><a href="/signup">Google SignUp</a></li>
+              </ul>
+            </div>
+          </nav>
             <div style="text-align: center;">
                 <form action="/login" method="post">
                     <h2>Login </h2>
@@ -85,8 +80,6 @@ body{
                     <button>Submit</button>
                 </form>                  
             </div>      
-            <br>    
-        <a href="/signup">Sign Up</a>
-        <a href="/auth/google">Sign In with Google</a>
+            <br>
     </body>
 </html>

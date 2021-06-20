@@ -13,7 +13,7 @@ var router = express.Router();
   };
   
   router.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname + "/../public/dashboard.html"));
+    res.sendFile(path.resolve(__dirname + "/../public/index.html"));
   });
 
   router

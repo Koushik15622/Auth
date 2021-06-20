@@ -14,6 +14,7 @@ var spl = require('./routes/spl');
 var app = express();
 
 //app.use(morgan('dev'));
+app.use(express.static(__dirname+"/public"));
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -37,9 +38,9 @@ app.use('/auth',gauth);
 app.use('/cse',cse);
 app.use('/ece',ece);
 app.use('/spl',spl);
-app.use(function (req, res, next) {
-  res.status(404).send("Kya chahiye bhai!?");
-});
+// app.use(function (req, res, next) {
+//   res.status(404).send("Kya chahiye bhai!?");
+// });
 const port = process.env.PORT || 3000;
 app.listen(port, () =>
   console.log('App started on port '+port)
