@@ -28,6 +28,7 @@ var router = express.Router();
       email: req.body.email,
       password:req.body.password,
     });
+    //console.log(user);
     user.save((err, docs) => {
       if (err) {
         res.redirect("/signup");

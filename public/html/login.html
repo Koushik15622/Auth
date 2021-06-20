@@ -1,87 +1,52 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <title>Login</title>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>LogIn</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <link href="../css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../css/own.css">
     </head>
-    <style>
-       form{
-    background-color: black;
-    padding-top: 1%;
-    padding-bottom: 5%;
-    border-radius: 20px;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-top: 8%;
-}
-.a{
-    padding-right: 2%;
-    padding-top: 1.7%;
-    padding-bottom: 1.7%;
-    float: right;
-}
-input{
-    height: 35px;
-    min-width: 300px;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-    text-indent: 10px;
-}
-button{
-    background-color: #FF5964;
-    border-radius: 10px;
-    height: 35px;
-    width: 30%;  
-    border: none;  
-    font-family: Montserrat ;
-    color: white;
-}
-h2{
-    color: white;
-    font-family: Montserrat ;
-    font-size: 40px;
-}
-.rr{
-    padding-left: 3%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    float: left;
-}
-    
-h1,a{
-    font-family: Montserrat;
-    color: whitesmoke;
-}
-body{
-    background-color:#5286F3;
-}
-    </style>
-    <body>
-        <nav class="navbar navbar-inverse fixed-top" style="width: 100%;padding-bottom: 10px;">
-            <div class="container-fluid">
-              <div class="navbar-header" style="padding-top: 10px;padding-left: 150px;">
+    <body id="page-top" style="background-color: #5286F3">
+        <nav class="navbar navbar-expand-lg navbar-inverse py-3" id="mainNav" style="background-color: black;">
+            <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="/">Online Companion - Virtual Books</a>
-              </div>
-              <ul class="nav navbar-nav navbar-right navbar-collapse" style="padding-top: 10px;padding-right: 70px;">
-                <li><a href="/login">Login</a></li>
-                <li><a href="/signup">Sign Up</a></li>
-                <li><a href="/auth/google">Google SignUp</a></li>
-              </ul>
+                <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> -->
+                <div class=" navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/login">LogIn</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/signup">SignUp</a></li>
+                    </ul>
+                </div>
             </div>
-          </nav>
-            <div style="text-align: center;">
-                <form action="/login" method="post">
-                    <h2>Login </h2>
-                    <br>
-                    <input type="text" placeholder="Username" name="username"><br><br>
-                    <input type="password" placeholder="Password" name="password"><br><br>
-                     <br>
-                    <button>Submit</button>
-                </form>                  
-            </div>      
-            <br>
+        </nav>
+        <div class="jumbotron text-center" style="background-color: black;margin: 5%;border-radius: 15px;">
+            <form action="/login" method="post" class = "form-inline justify-content-center">
+                <br>
+                <br>
+                <h2 style="color: white; font-family: Montserrat;font-size: 300%;">LogIn</h2>
+                <br>
+                <input type="text" placeholder="Username" name="username" style="text-indent: 10px;border-radius: 5px;font-family: Montserrat;height: 40px;width: 25%; min-width: 200px;"><br><br>
+                <input type="password" placeholder="Password" name="password"style="text-indent: 10px;border-radius: 5px;font-family: Montserrat;height: 40px;width:25%;min-width: 200px;"><br><br>
+                 <br>
+                <button class="btn btn-primary mb-2" style="width: 25%;min-width: 200px;">Submit</button>
+                <br>
+                <br>
+            </form> 
+            <hr>                
+        </div>
+        <div style="text-align: center;"><a class="btn btn-primary btn-xl" style="width: 25%;min-width: 200px;" href="/auth/google">Sign In With Google</a></div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <script src="../js/scripts.js"></script>
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>
