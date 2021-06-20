@@ -13,13 +13,13 @@ var router = express.Router();
   };
   
   router.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname + "/../public/index.html"));
+    res.sendFile(path.resolve(__dirname + "/../public/html/index.html"));
   });
 
   router
   .route("/signup")
   .get(sessionChecker, (req, res) => {
-    res.sendFile(path.resolve(__dirname + "/../public/signup.html"));
+    res.sendFile(path.resolve(__dirname + "/../public/html/signup.html"));
   })
   .post((req, res) => {
 
@@ -43,7 +43,7 @@ var router = express.Router();
   router
   .route("/login")
   .get(sessionChecker, (req, res) => {
-    res.sendFile(path.resolve(__dirname + "/../public/login.html"));
+    res.sendFile(path.resolve(__dirname + "/../public/html/login.html"));
   })
   .post(async (req, res) => {
     var username = req.body.username,
