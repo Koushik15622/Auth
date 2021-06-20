@@ -22,19 +22,20 @@ router.get("/:c", (req, res) => {
      var i = req.params.c;
      //console.log(req.session.user);
      var user = req.session.user;
+     var n = req.session.user.username;
      var fp = user.due + rate[i];
      //console.log(req.session.user);
      //console.log(fp);
-       User.updateOne({username:user.username},{$set:{due:fp}}).then(async(r,err)=>{
-         var u = await User.findOne({username:user.username}).exec();
+       User.updateOne({email:user.email},{$set:{due:fp}}).then(async(r,err)=>{
+         var u = await User.findOne({email:user.email}).exec();
          req.session.user = u;
+         req.session.user.username = n;
          req.session.cost = rate[i];
          req.session.bid = id[i];
          req.session.bn = bn[i];
          req.session.link = l[i];
          req.session.tid = sid.generate();
          req.session.save();
-         //console.log(req.session);
          return res.send(req.session);
          
      });
