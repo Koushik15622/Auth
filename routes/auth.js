@@ -77,13 +77,6 @@ var router = express.Router();
   }
 });
 
-router.get("/spl", (req, res) => {
-  if (req.session.user) {
-    res.render('spl',{uname:req.session.user.username});
-  } else {
-    res.redirect("/login");
-  }
-});
 router.get("/logout", (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
     req.session.destroy();
