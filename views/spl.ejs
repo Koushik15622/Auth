@@ -7,6 +7,10 @@
         <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
       </head>
     <style>
 h1,a,p,h4,button{
@@ -32,23 +36,32 @@ body{
 }
     </style>
     <body>
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <a class="navbar-brand" href="#">Online Companion - Virtual Books</a>
-              </div>
-              <ul class="nav navbar-nav">
-                <li><a href="/dashboard">Home</a></li>
-                <li><a href="/cse">CSE</a></li>
-                <li><a href="/ece">ECE</a></li>
-                <li><a href="/spl">Special Books</a></li>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Online Companion - Virtual Books</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Departments
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/books/cse">CSE</a></li>
+                <li><a href="/books/ece">ECE</a></li>
+                <li><a href="/books/eee">EEE</a></li>
+                <li><a href="/books/mech">MECHANICAL</a></li>
+                <li><a href="/books/civ">CIVIL</a></li>
+                <li><a href="/books/spl">SPECIAL BOOKS</a></li>
               </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> <%=uname %></a></li>
-                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-              </ul>
-            </div>
-          </nav> 
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> <%=uname %></a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+          </ul>
+        </div>
+      </nav> 
           <h1 class="container">COLLEGE SPECIAL BOOKS</h1>
           <p class="container">Cost of these books will be added to your Due amount. SoftCopy can be downloaded and Hardcopy will be given after the RECEIPT is verified</p>
           <div class="card" style="margin: 5%;background-color: black;color: cornsilk;border-radius: 15px;">
@@ -75,63 +88,6 @@ body{
           <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.6.4/jquery.colorbox-min.js"></script>
           <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-          <script>
-          function ConfirmDialog(id) {
-            message = "The amount will be added to your Total Due. Confirm this step ?"
-            $('<div></div>').appendTo('body')
-              .html('<div><h6>' + message + '</h6></div>')
-              .dialog({
-                modal: true,
-                title: 'Delete message',
-                zIndex: 10000,
-                autoOpen: true,
-                width: '600',
-                resizable: false,
-                buttons: {
-                  Yes: function() {
-                    //alert("/spl/"+id);
-                    $.ajax({
-                      url: "/spl/"+id,
-                      type: 'GET',
-                      success: function(data){
-                        var us = data.user.username,c=data.cost,bid=data.bid,bn=data.bn,sid=data.tid;
-                        $('<div></div>').appendTo('body')
-                        .html('<div><h6>Username : '+us+'</h6><h6>Bookname : '+bn+'</h6><h6>BookID : '+bid+'</h6><h6>Book cost : '+c+'</h6><h6>Transaction ID : '+sid+'</h6><h5>Please take a screenshot of the RECEIPT for verification</h5></div>')
-                        .dialog({
-                        modal: true,
-                        title: 'RECEIPT',
-                        zIndex: 10000,
-                        autoOpen: true,
-                        width: '600',
-                        resizable: false,
-                        buttons:{
-                          close:  function(event, ui) {
-                          $(this).remove();}
-                         }
-                      })
-
-                        toastr.success('Purchase Successful. Due amount has been updated!!');
-                        var w = window.open(data.link,'_blank');
-                        if(w){w.focus()}
-                        else{alert("Please allow POPUP's to download the softcopy!!")}
-                      },
-                      error: function(err){
-                        alert(err);
-                      }                      
-                    })
-                    //alert("af spl"+id);
-                   $(this).dialog("close");
-                  },
-                  No: function() {
-                    $(this).dialog("close");
-                  }
-                },
-                close: function(event, ui) {
-                  $(this).remove();
-                }
-              });
-          };
-          
-          </script>
+          <script src="../pug/site.js"></script>
     </body>
 </html>
