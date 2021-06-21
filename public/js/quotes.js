@@ -16,6 +16,13 @@ const quotes=[
     "Wisdom…. comes not from age, but from education and learning.",
     "Nothing is pleasanter than exploring a library."
 ]
+const authors=["Stephen Fry","Carlos María Domínguez",
+            "Jorge Luis Berges", "Dorothy Parker","Sarah J. Maas",
+            " Norman Cousins", "B. B. King","Frank Zappa","Vicki Myron",
+            " Harold Howe", "Shelby Foote","Henry Ward Beecher","Shandy L. Kurth",
+            "G.K. Chesterton","Shai Reshef","Aristotle"]
 
 const i = Math.floor(Math.random() * quotes.length);
-    document.getElementById('quote').innerHTML = quotes[i];
+const j = Math.floor(Math.random() * authors.length);
+$('#quote').html(quotes[i]);
+$('#author').html(authors[j]);
