@@ -5,10 +5,10 @@ var session = require("express-session");
 var path = require("path");
 var router = express.Router();
 
-var rate = [549,799,930,699,760];
+var rate = [840,777,1017,877,199];
 var id = [12576,36684,49056,88674,96754];
-var bn = ['GATE','GRE','TOEFL']
-var l = ['https://www.indiacon.in/downloads/588b3b4843455.pdf','https://www.indiacon.in/downloads/588b3b4843455.pdf','https://www.indiacon.in/downloads/588b3b4843455.pdf'];
+var bn = ['GATE','GRE','TOEFL','CAT','NCC - Handbook']
+var l = ['https://www.indiacon.in/downloads/588b3b4843455.pdf','https://www.ets.org/s/gre/pdf/practice_book_GRE_pb_revised_general_test.pdf','https://examplanet.com/ebooks/OFFICIAL%20GUIDE%20TOEFL%20iBT%20Third%20Edition.pdf','http://www.prep4paper.com/Quant%20aptitude%20Pearson.pdf','http://www.cbseacademic.nic.in/web_material/doc/CADET&%20ANO%20HAND%20BOOK%202017/Trg%20Manuals/Common/Cadet-JD-JW.pdf'];
 
 
 router.get("/cse", (req, res) => {

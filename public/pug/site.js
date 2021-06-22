@@ -4,7 +4,7 @@ function ConfirmDialog(id) {
     .html('<div><h6>' + message + '</h6></div>')
     .dialog({
       modal: true,
-      title: 'Delete message',
+      title: 'Confirmation message',
       zIndex: 10000,
       autoOpen: true,
       width: '600',
