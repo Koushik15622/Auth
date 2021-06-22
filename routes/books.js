@@ -1,15 +1,17 @@
 var express = require("express");
 var User = require("../models/User");
+var Trans = require("../models/trans");
 var sid = require('shortid');
 var session = require("express-session");
 var path = require("path");
+const { link } = require("fs");
 var router = express.Router();
 
 var rate = [840,777,1017,877,199];
 var id = [12576,36684,49056,88674,96754];
 var bn = ['GATE','GRE','TOEFL','CAT','NCC - Handbook']
 var l = ['https://www.indiacon.in/downloads/588b3b4843455.pdf','https://www.ets.org/s/gre/pdf/practice_book_GRE_pb_revised_general_test.pdf','https://examplanet.com/ebooks/OFFICIAL%20GUIDE%20TOEFL%20iBT%20Third%20Edition.pdf','http://www.prep4paper.com/Quant%20aptitude%20Pearson.pdf','http://www.cbseacademic.nic.in/web_material/doc/CADET&%20ANO%20HAND%20BOOK%202017/Trg%20Manuals/Common/Cadet-JD-JW.pdf'];
-
+var data;
 
 router.get("/cse", (req, res) => {
     if (req.session.user) {
@@ -72,16 +74,23 @@ router.get("/spl/:c", (req, res) => {
        var u = await User.findOne({email:user.email}).exec();
        req.session.user = u;
        req.session.user.username = n;
+       var tid = sid.generate();
+       var trans = new Trans({
+        transID:tid,
+        email:u.email,
+        bid:id[i]
+      });
+      trans.save();
        req.session.cost = rate[i];
        req.session.bid = id[i];
        req.session.bn = bn[i];
        req.session.link = l[i];
-       req.session.tid = sid.generate();
+       req.session.tid = tid;
        req.session.save();
-       return res.send(req.session);
+       //console.log(JSON.stringify(req.session))
+      return res.send(req.session);
        
    });
-   //res.send(req.session.user);
   } else {
     res.redirect("/login");
   }

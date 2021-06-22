@@ -5,14 +5,14 @@ var cs = process.env.MONGO_CONNECTION_STRING || '';
 mongoose.connect(cs,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true});
 var db = mongoose.connection;
 db.on('connected', function() {
-console.log("Successfully connected to MongoDB!");
+console.log("Users Successfully connected to MongoDB!");
 });
 
 db.on('error',function(err){
-    console.log('connect error:'+err);
+    console.log('Users connect error:'+err);
 })
 db.on('disconnected',function(){
-    console.log('disconnected');
+    console.log('Users disconnected');
 })
 
 const userSchema = mongoose.Schema({
@@ -50,5 +50,4 @@ userSchema.methods.comparePassword = function(plaintext, callback) {
 };
 
 const userModel = mongoose.model('user_data',userSchema)
-
 module.exports = userModel
