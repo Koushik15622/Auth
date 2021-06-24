@@ -34,9 +34,9 @@ app.use(passport.initialize());
 app.use('/',auth);
 app.use('/auth',gauth);
 app.use('/books',books);
-// app.use(function (req, res, next) {
-//   res.status(404).send("Kya chahiye bhai!?");
-// });
+app.use(function (req, res, next) {
+  res.status(404).send("Not found!!");
+});
 const port = process.env.PORT || 3000;
 app.listen(port, () =>
   console.log('App started on port '+port)
