@@ -1,0 +1,66 @@
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Users</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../pug/style.css">  
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Online Companion - Virtual Books</a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li><a href="/dashboard">Home</a></li>
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Departments
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/books/cse">CSE</a></li>
+                    <li><a href="/books/ece">ECE</a></li>
+                    <li><a href="/books/eee">EEE</a></li>
+                    <li><a href="/books/mech">MECHANICAL</a></li>
+                    <li><a href="/books/civ">CIVIL</a></li>
+                    <li><a href="/books/spl">SPECIAL BOOKS</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/books/profile"><span class="glyphicon glyphicon-user"></span> <%=uname %></a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+              </ul>
+            </div>
+          </nav> 
+          <div class="container">
+          <h2>Hello, <%=uname %></h2><br>
+          <h2>Registered Email : <%=email %></h2><br>
+          <h2>Your total due: <%=due %></h2>
+          <br>
+          </div>
+          <hr>
+          <h2 class = "container" style="color: yellow;"><b>Your Transactions</b></h2>
+          <% for(var i=0; i < data.length ; i++) { %>
+          <div class="card" style="margin: 5%;background-color: black;color: cornsilk;border-radius: 15px;">
+            <div class="card-body" style="padding: 3%;">
+              <h3 class="card-title">Book ID : <i><%= data[i].bid %></i> </h3>
+              <br>
+              <h3 class="card-title">Book Name : <i><%= data[i].bn %></i> </h3>
+              <br>
+              <h3 class="card-title">Book Cost : <i><%= data[i].bc %></i> </h3>
+              <hr>
+              <br>
+              <h4 class="card-text">Transaction ID : <i><%= data[i].transID %></i></h4>
+            </div>
+          </div> 
+          <% } %>
+          <script>$(document).ready(function() {
+            $(".dropdown-toggle").dropdown();
+        });</script>
+    </body>
+</html>

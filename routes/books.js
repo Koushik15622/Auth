@@ -61,6 +61,20 @@ router.get("/spl", (req, res) => {
   }
 });
 
+router.get("/profile", (req, res) => {
+  if (req.session.user) {
+    Trans.find({email:req.session.user.email},(err,list)=>{
+      for(var i=0;i<list.length;i++){
+        var index=id.indexOf(list[i].bid);
+        list[i].bn=bn[index];
+        list[i].bc=rate[index];
+      }
+      res.render('profile',{uname:req.session.user.username,data:list,email:req.session.user.email,due:req.session.user.due});
+    })
+  } else {
+    res.redirect("/login");
+  }
+});
 router.get("/spl/:c", (req, res) => {
   if (req.session.user) {
    var i = req.params.c;
