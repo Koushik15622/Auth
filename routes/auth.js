@@ -28,12 +28,11 @@ var router = express.Router();
       email: req.body.email,
       password:req.body.password,
     });
-    //console.log(user);
     user.save((err, docs) => {
       if (err) {
         res.redirect("/signup");
       } else {
-          console.log(docs)
+         // console.log(docs)
         req.session.user = docs;
         req.session.save();
         res.redirect("/dashboard");
