@@ -17,6 +17,8 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+console.log(process.env.MSC)
+
 app.use(session({
     key: "user_sid",
     secret: "IDONTKNOW",
